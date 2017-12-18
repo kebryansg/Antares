@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header"><i class="fa fa-user fa-group"></i> Orden Pedido </h1>
+    </div>
+</div>
+
+<div class="row" id="Listado">
+    <div class="col-md-12">
+        <div id="toolbar" class="form-inline" >
+            <button type="button" name="btn_add" class="btn btn-default btn-success btn-outline">
+                <i class="glyphicon glyphicon-plus"></i> Agregar
+            </button>
+            <!--<button type="button" name="btn_del" class="btn btn-default btn-danger btn-outline">
+                <i class="glyphicon glyphicon-trash"></i> Eliminar
+            </button>-->
+            <div class="input-group">
+                <input id_find name="IDModulo" type="text" class="hidden" required>
+                <input descripcion_find type="text" class="form-control" aria-describedby="basic-addon1" readonly>
+                <span class = "input-group-btn">
+                    <button class = "btn btn-default" type="button" data-toggle="modal" data-target="#modal-find" data-ajax="loadArea">
+                        <i class="fa fa-search"></i> 
+                    </button>
+                    <!--<button new class="btn btn-default" type="button" data-toggle="modal" data-target="#modal-new" data-url="mvc/views/activos/area.php">
+                        <i class="fa fa-plus"></i> 
+                    </button>-->
+                </span>
+            </div>
+        </div>
+        <table 
+            init
+            data-toolbar="#toolbar"
+            data-ajax="loadOrdenPedido"
+            data-response-handler="responseHandler">
+            <thead>
+                <tr>
+                    <th data-field="state" data-checkbox="true"></th>
+                    <th data-field="ID" class="col-md-1" data-align="center">Cód.</th>
+                    <th data-field="fecha">Fecha</th>
+                    <th data-field="area">Área</th>
+                    <th data-field="usuario">Usuario</th>
+                    <th data-field="estado" class="col-md-1" data-formatter="estadoOrdenPedido">Estado</th>
+                    <th data-field="accion" class="col-md-1" data-align="center" data-formatter="defaultBtnAccion" data-events="event_accion_default">Acciones</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+<div id="div-registro" class="row hidden" >
+    <div class="col-md-12">
+        <form class="panel panel-default" action="servidor/sPedido.php" role="ordenPedido" full>
+            <div class="panel-heading">
+                Detalle
+                <div class="pull-right">
+                    <div class="form-inline">
+                        <button class="btn btn-sm btn-danger btn-outline" type='reset'>
+                            <i class="fa fa-reply"></i> Cancelar
+                        </button>
+                        <button class="btn btn-sm btn-primary btn-outline" type='submit'>
+                            <i class="fa fa-save"></i> Guardar
+                        </button>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label">Fecha</label>
+                    <input name="fecha" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label">Área</label>
+                    <div class="input-group">
+                        <input id_find name="IDArea" type="text" class="hidden" required>
+                        <input descripcion_find type="text" class="form-control" aria-describedby="basic-addon1" readonly>
+                        <span class = "input-group-btn">
+                            <button class = "btn btn-default" type="button" data-toggle="modal" data-target="#modal-find" data-ajax="loadArea">
+                                <i class="fa fa-search"></i> 
+                            </button>
+                            <button new class="btn btn-default" type="button" data-toggle="modal" data-target="#modal-new" data-url="mvc/views/activos/area.php">
+                                <i class="fa fa-plus"></i> 
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="col-md-3">
+                <div class="form-group">
+                    <label for="" class="control-label">Estado</label>
+                    <select name="estado" class="form-control selectpicker" required>
+                        <option value="APR">Aprobado</option>
+                        <option value="REC">Rechazado</option>
+                        <option value="DEV">Devuelto</option>
+                    </select>
+                </div>
+            </div>-->
+            <div class="clearfix"></div>
+        </form>
+    </div>
+    <div class="col-md-12">
+        <div id="toolbar2" class="btn-group">
+            <button type="button" class="btn btn-default btn-success btn-outline" data-toggle="modal" data-target="#items-registro">
+                <i class="glyphicon glyphicon-plus"></i> Agregar
+            </button>
+            <button type="button" name="btn_del" class="btn btn-default btn-danger btn-outline">
+                <i class="glyphicon glyphicon-trash"></i> Eliminar
+            </button>
+        </div>
+        <table
+            id="tbOrdenPedido"
+            data-toolbar="#toolbar2"
+            full>
+            <thead>
+                <tr>
+                    <th data-field="state" data-checkbox="true"></th>
+                    <th data-field="cantidad" class="col-md-1" data-align="center">Cant.</th>
+                    <th data-field="descripcion">Descripción</th>
+                    <th data-field="precioref" class="col-md-1">Precio Unit.</th>
+                    <th data-field="observacion" class="col-md-2" data-formatter="obs" >Observación</th> <!-- data-formatter -->
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    <!--<div class="clearfix"></div>-->
+</div>
+
+<div id="items-registro" class="modal fade"   >
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    Nuevo Registro
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form addLocal >
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Descripción</label>
+                            <input name="descripcion" type="text" class="form-control">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Cantidad</label>
+                                    <input name="cantidad" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Precio Unit.</label>
+                                    <input name="precioRef" type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Observación</label>
+                            <textarea name="observacion" rows="4" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="pull-right">
+                            <button type="reset" class="btn btn-danger btn-outline"> <i class="fa fa-reply"></i> Cancelar</button>
+                            <button type="submit" class="btn btn-success btn-outline"> <i class="fa fa-plus"></i> Agregar</button>
+
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="recursos/views/Pedido/ordenPedido.js"></script>

@@ -1,0 +1,44 @@
+/*class jsontest implements JsonSerializable {
+        function __construct($value) { $this->value = $value; }
+        function jsonSerialize() { return $this->value; }
+}*/
+
+
+abstract class Model {
+
+    public function jsonSerialize() {
+        $getter_names = get_class_methods(get_class($this));
+        $gettable_attributes = array();
+        foreach ($getter_names as $key => $value) {
+            if(substr($value, 0, 4) === 'get_') {
+                $gettable_attributes[substr($value, 4, strlen($value))] = $this->$value();
+            }
+        }
+        return $gettable_attributes;
+    }
+
+}
+
+class Content extends Model {
+   
+    private $title;
+    private $text;
+
+    public function get_title() {
+        return $this->title;
+    }
+
+    public function set_title($title) {
+        $this->title = $title;
+    }
+
+    public function get_text() {
+        return $this->text;
+    }
+
+    public function set_text($text) {
+        $this->text = $text;
+    }
+
+   
+}

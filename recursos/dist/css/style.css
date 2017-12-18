@@ -1,0 +1,10 @@
+a[name="user"]:hover,a[name="user"]:focus {
+    color: black;
+}
+a[name="user"] {
+    color: white;
+}
+
+.bx {
+    border: red solid 2px;
+}
