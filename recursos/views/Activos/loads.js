@@ -258,4 +258,24 @@ function loadOrdenPedido(params) {
     };
     params.success(getJson(json_data));
 }
+function loadTipoGeneral(params) {
+    json_data = {
+        data: $.extend({}, {
+            op: "tipogeneral",
+            accion: "list"
+        }, params.data),
+        url: "servidor/sCatalogo.php"
+    };
+    params.success(getJson(json_data));
+}
 
+function loadSubTipoGeneral(params){
+    json_data = {
+        data: $.extend({}, {
+            op: "subtipogeneral",
+            accion: "list"
+        }, params.data),
+        url: "servidor/sCatalogo.php"
+    };
+    params.success(getJson(json_data));
+}

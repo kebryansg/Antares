@@ -17,15 +17,29 @@ var TableDefault = {
 function action_seleccion_v2(datos) {
     $("#modal-find").modal("hide");
     div = $("#modal-find").data("ref");
-    $(div).find("input[descripcion_find]").val(datos.descripcion);
-    $(div).find("input[id_find]").val(datos.ID);
+    //console.log(($(div).closest(".input-group").length > 0));
+    //Separar los casos donde es invocado el modal de busqueda
+    if ($(div).closest(".input-group").length > 0) {
+        div = $(div).closest(".input-group");
+        $(div).find("input[descripcion_find]").val(datos.descripcion);
+        $(div).find("input[id_find]").val(datos.ID);
+    } else if ($(div).closest(".btn-group").length > 0) {
+        id = $(div).closest(".btn-group").attr("id");
+        table_ref = 'table[data-toolbar="#' + id + '"]';
+
+        // Validar que no se repitan los registros
+        ids = $(table_ref).bootstrapTable("getData").filter(val => val.ID === datos.ID);
+
+        if (ids.length === 0)
+            $(table_ref).bootstrapTable("append", datos);
+    }
 }
 
 
 function initialComponents() {
     $("table[init]").bootstrapTable(TablePaginationDefault);
     $("table[full]").bootstrapTable(TableDefault);
-    
+
     $(".selectpicker").selectpicker();
 
     $('#tbFind').on('dbl-click-row.bs.table', function (e, row, $element) {
@@ -36,7 +50,8 @@ function initialComponents() {
         'show.bs.modal': function (e) {
             //console.log($(e.relatedTarget).closest(".input-group"));
             dataAjax = $(e.relatedTarget).attr("data-ajax");
-            $(this).data("ref", $(e.relatedTarget).closest(".input-group"));
+            //$(this).data("ref", $(e.relatedTarget).closest(".input-group"));
+            $(this).data("ref", $(e.relatedTarget));
             $("table[search]").bootstrapTable($.extend({}, TablePaginationDefault,
                     {
                         ajax: dataAjax

@@ -18,6 +18,8 @@ include_once '../mvc/modelo/TipoDaoImp.php';
 include_once '../mvc/modelo/SubTipoDaoImp.php';
 include_once '../mvc/modelo/BodegaDaoImp.php';
 include_once '../mvc/modelo/UbicacionDaoImp.php';
+include_once '../mvc/modelo/TipoGeneralDaoImp.php';
+include_once '../mvc/modelo/SubTipoGeneralDaoImp.php';
 
 
 
@@ -34,6 +36,18 @@ switch ($accion) {
         $pag = $_POST["offset"];
         $count = 0;
         switch ($op) {
+            case "subtipogeneral": 
+                $resultado = json_encode(array(
+                    "rows" => SubTipoGeneralDaoImp::listSubTipoGeneral($top, $pag, $count),
+                    "total" => $count
+                ));
+                break;
+            case "tipogeneral":
+                $resultado = json_encode(array(
+                    "rows" => TipoGeneralDaoImp::listTipoGeneral($top, $pag, $count),
+                    "total" => $count
+                ));
+                break;
             case "bodega":
                 $resultado = json_encode(array(
                     "rows" => BodegaDaoImp::listBodega($top, $pag, $count),
@@ -147,6 +161,16 @@ switch ($accion) {
     case "save":
         $json = json_decode($_POST["datos"]);
         switch ($op) {
+            case "subtipogeneral": 
+                $subtipo = $mapper->map($json, new SubTipoGeneral());
+                SubTipoGeneralDaoImp::save($subtipo);
+                $resultado = $subtipo->ID;
+                break;
+            case "tipogeneral": 
+                $tipo = $mapper->map($json, new TipoGeneral());
+                TipoGeneralDaoImp::save($tipo);
+                $resultado = $tipo->ID;
+                break;
             case "bodega":
                 $bodega = $mapper->map($json, new Bodega());
                 BodegaDaoImp::save($bodega);
