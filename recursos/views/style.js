@@ -30,8 +30,10 @@ function action_seleccion_v2(datos) {
         // Validar que no se repitan los registros
         ids = $(table_ref).bootstrapTable("getData").filter(val => val.ID === datos.ID);
 
-        if (ids.length === 0)
+        if (ids.length === 0) {
             $(table_ref).bootstrapTable("append", datos);
+        }
+
     }
 }
 

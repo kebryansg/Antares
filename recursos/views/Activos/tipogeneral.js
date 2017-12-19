@@ -11,14 +11,21 @@ $(function(){
             dt:{
                 accion: "save",
                 op: $(this).attr("role"),
-                datos: $(this).serializeObject()
+                datos: $(this).serializeObject(),
+                subtipos: getSubTipos()
             }
         };
-        save_global(datos);
+        
+        /*save_global(datos);
         $(table).bootstrapTable("refresh");
-        $(this).trigger("reset");
+        $(this).trigger("reset");*/
     });
 });
+
+function getSubTipos(){
+    data = $("#div-registro table").bootstrapTable("getData").map(row => row.ID);
+    return JSON.stringify(data);
+}
 
 function edit(datos){
     $("#div-registro form").data("id", datos.ID);
