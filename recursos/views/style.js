@@ -273,6 +273,8 @@ window.event_accion_default = {
 };
 
 $(function () {
+    
+    $("#modal-adminTipo").modal();
     $("#page-wrapper").on("click", "button[name='btn_add']", function (e) {
         showRegistro();
     });
@@ -282,7 +284,7 @@ $(function () {
         }
 
     });
-    $("#page-wrapper").on("click", "button[name='btn_del_individual']", function (e) {
+    $(document).on("click", "button[name='btn_del_individual']", function (e) {
         deleteIndividual();
     });
 
