@@ -73,7 +73,10 @@
     <br>
     <div class="col-md-12">
         <div id="toolbar1" class="btn-group">
-            <button type="button" class="btn btn-default btn-success btn-outline" data-toggle="modal" data-target="#modal-find" data-ajax="loadSubTipoGeneral" >
+            <button type="button" class="btn btn-info btn-outline" data-toggle="modal" data-target="#modal-find" data-ajax="loadSubTipoGeneral" >
+                <i class="glyphicon glyphicon-new-window"></i> Asignar
+            </button>
+            <button type="button" class="btn btn-success btn-outline" data-toggle="modal" data-target="#modal-new" data-url="mvc/views/activos/subtipogeneral.php" >
                 <i class="glyphicon glyphicon-plus"></i> Agregar
             </button>
             <button type="button" name="btn_del_individual" class="btn btn-default btn-danger btn-outline">

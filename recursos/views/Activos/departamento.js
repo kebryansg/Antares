@@ -6,21 +6,6 @@ selections = [];
 $(function () {
     initialComponents();
 
-    $("#div-registro form").submit(function (e) {
-        e.preventDefault();
-        datos = {
-            url: $(this).attr("action"),
-            dt: {
-                accion: "save",
-                op: op,
-                datos: $(this).serializeObject()
-            }
-        };
-        save_global(datos);
-        $(table).bootstrapTable("refresh");
-        $(this).trigger("reset");
-    });
-
 });
 
 function edit(datos) {

@@ -6,7 +6,7 @@
 </div>
 
 <div class="row hidden" id="div-registro">
-    <form id="frmSub" role="form">
+    <form save action="servidor/sCatalogo.php" role="fabricante" >
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-6">

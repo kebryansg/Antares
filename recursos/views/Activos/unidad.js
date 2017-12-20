@@ -1,26 +1,9 @@
 op = "unidad";
 url = "servidor/sCatalogo.php";
 table = $("#Listado table");
-selections = [];
 
 $(function () {
     initialComponents();
-
-    $("form").submit(function (e) {
-        e.preventDefault();
-        datos = {
-            url: url,
-            dt: {
-                accion: "save",
-                op: op,
-                datos: $(this).serializeObject()
-            }
-        };
-        save_global(datos);
-        $(table).bootstrapTable("refresh");
-        $(this).trigger("reset");
-    });
-
 });
 
 

@@ -1,12 +1,12 @@
 op = "pais";
 url = "servidor/sCatalogo.php";
 table = $("#Listado table");
-selections = [];
+//selections = [];
 
 $(function () {
     initialComponents();
 
-    $("form").submit(function (e) {
+    /*$("form").submit(function (e) {
         e.preventDefault();
         datos = {
             url: url,
@@ -19,7 +19,7 @@ $(function () {
         save_global(datos);
         $(table).bootstrapTable("refresh");
         $(this).trigger("reset");
-    });
+    });*/
 });
 
 function edit(datos) {

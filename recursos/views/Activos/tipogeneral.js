@@ -4,7 +4,7 @@ $(function () {
     initialComponents();
     //$("button[name='btn_add']").click();
 
-    $("form").submit(function (e) {
+    /*$("form").submit(function (e) {
         e.preventDefault();
         datos = {
             url: $(this).attr("action"),
@@ -19,7 +19,7 @@ $(function () {
         save_global(datos);
         $(table).bootstrapTable("refresh");
         $(this).trigger("reset");
-    });
+    });*/
 });
 
 function getSubTipos() {

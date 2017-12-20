@@ -1,27 +1,10 @@
 op = "tipo";
 url = "servidor/sCatalogo.php";
 table = $("#Listado table");
-selections = [];
 
 $(function(){
     initialComponents();
-    console.log(parseInt(0));
     
-    $("form").submit(function(e){
-        e.preventDefault();
-        datos = {
-            url: url,
-            dt: {
-                accion: "save",
-                op: op,
-                datos: $(this).serializeObject()
-            }
-        };
-        save_global(datos);
-        $(table).bootstrapTable("refresh");
-        $(this).trigger("reset");
-        
-    });
 });
 
 function edit(datos) {

@@ -17,6 +17,6 @@
         
     </body>
     <script type="text/javascript">
-        $("#page-wrapper").load("mvc/views/activos/tipogeneral.php");
+        $("#page-wrapper").load("mvc/views/activos/edificio.php");
     </script>
 </html>

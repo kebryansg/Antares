@@ -37,7 +37,7 @@
 </div>
 
 <div id="div-registro" class="row hidden" >
-    <form id="frmGrupo" role="form">
+    <form save action="servidor/sCatalogo.php" role="subtipo" >
 
         <div class="col-md-6">
             <div class="row">

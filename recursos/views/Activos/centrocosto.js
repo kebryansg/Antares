@@ -1,39 +1,11 @@
 op = "centrocosto";
 url = "servidor/sCatalogo.php";
 table = $("#Listado table");
-selections = [];
-queryParams = {
-    op: op,
-    accion: "list"
-};
 
 $(function () {
     initialComponents();
 
-    $("form").submit(function (e) {
-        e.preventDefault();
-        datos = {
-            url: url,
-            dt: {
-                accion: "save",
-                op: op,
-                datos: $(this).serializeObject()
-            }
-        };
-        save_global(datos);
-        $(table).bootstrapTable("refresh");
-        $(this).trigger("reset");
-    });
-
 });
-/*function ajx(params) {
-    json_data = {
-        data: $.extend({}, queryParams, params.data),
-        url: url
-    };
-    params.success(getJson(json_data));
-}*/
-
 
 function edit(datos) {
     $("form").data("id", datos.ID);
