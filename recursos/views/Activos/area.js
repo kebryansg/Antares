@@ -1,11 +1,8 @@
 op = "area";
 url = "servidor/sCatalogo.php";
 table = $("#Listado table");
-selections = [];
-queryParams = {
-    op: op,
-    accion: "list"
-};
+//selections = [];
+
 $(function () {
     initialComponents();
 
@@ -25,15 +22,6 @@ $(function () {
     });
 
 });
-
-function ajx(params) {
-    json_data = {
-        data: $.extend({}, queryParams, params.data),
-        url: url
-    };
-    params.success(getJson(json_data));
-}
-
 
 function edit(datos) {
     $("form").data("id", datos.ID);

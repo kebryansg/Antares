@@ -1,3 +1,4 @@
+var selections = [];
 var TablePaginationDefault = {
     height: 400,
     pageSize: 5,
@@ -10,6 +11,7 @@ var TablePaginationDefault = {
 var TableDefault = {
     height: 400,
     pageSize: 5,
+    clickToSelect: true,
     //search: true,
     pageList: [5, 10, 15, 20],
     cache: false
@@ -39,6 +41,7 @@ function action_seleccion_v2(datos) {
 
 
 function initialComponents() {
+    selections = [];
     $("table[init]").bootstrapTable(TablePaginationDefault);
     $("table[full]").bootstrapTable(TableDefault);
 
@@ -166,11 +169,13 @@ function alertEliminarRegistro(row) {
     $.confirm({
         theme: "modern",
         title: 'Eliminar Registro?',
+        escapeKey: "cancelAction",
         content: 'Estás seguro de continuar?',
         autoClose: 'cancelAction|8000',
         buttons: {
             deleteUser: {
                 text: 'Eliminar Registro',
+                keys: ['enter'],
                 action: function () {
                     delet(row);
                 }
@@ -188,14 +193,18 @@ function alertEliminarRegistro(row) {
 function alertEliminarRegistros() {
     $.confirm({
         theme: "modern",
+        escapeKey: "cancelAction",
         title: 'Eliminar Registros?',
         content: 'Estás seguro de continuar?',
         autoClose: 'cancelAction|8000',
         buttons: {
             deleteUser: {
                 text: 'Eliminar Registros',
+                keys: ['enter'],
                 action: function () {
                     deletes();
+                    //$(btn_del).removeData("select");
+                    $(table).bootstrapTable("refresh");
                 }
             },
             cancelAction: {
@@ -269,8 +278,16 @@ $(function () {
         showRegistro();
     });
     $("#page-wrapper").on("click", "button[name='btn_del']", function (e) {
-        alertEliminarRegistros();
+        if (selections.length > 0) {
+            alertEliminarRegistros();
+        }
+
     });
+    $("#page-wrapper").on("click", "button[name='btn_del_individual']", function (e) {
+        deleteIndividual();
+    });
+
+
     $("#page-wrapper").on("click", "button[type='reset']", function (e) {
         //console.log($(this).closest(".modal-body"));
         if ($(this).closest(".modal-body").length > 0) {
@@ -283,21 +300,22 @@ $(function () {
 
 
     $(window).on('check.bs.table uncheck.bs.table check-all.bs.table uncheck-all.bs.table', function (e, rows) {
-        var ids = $.map(!$.isArray(rows) ? [rows] : rows, function (row) {
-            return row.ID;
-        });
-        if ($.inArray(e.type, ['check', 'check-all']) > -1) {
-            //Add
-            $.each(ids, function (i, id) {
-                selections.push(id);
-            });
-        } else {
-            //Delete
-            $.each(ids, function (i, id) {
-                if ($.inArray(id, selections) > -1) {
-                    selections.splice($.inArray(id, selections), 1);
-                }
-            });
+        if ($(e.target).attr("init")) {
+            var ids = $.map(!$.isArray(rows) ? [rows] : rows, row => row.ID);
+            if ($.inArray(e.type, ['check', 'check-all']) > -1) {
+                //Add
+                $.each(ids, function (i, id) {
+                    selections.push(id);
+                });
+
+            } else {
+                //Delete
+                $.each(ids, function (i, id) {
+                    if ($.inArray(id, selections) > -1) {
+                        selections.splice($.inArray(id, selections), 1);
+                    }
+                });
+            }
         }
     });
 
@@ -342,8 +360,7 @@ function deletes() {
         }
     });
     selections = [];
-    $(table).bootstrapTable("destroy");
-    $(table).bootstrapTable();
+    $(table).bootstrapTable("refresh");
 }
 
 function showRegistro() {

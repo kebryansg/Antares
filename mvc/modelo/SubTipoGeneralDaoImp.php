@@ -30,6 +30,13 @@ class SubTipoGeneralDaoImp {
         $conn->close();
         return $list;
     }
+    public static function listSubTipoGeneralxTipoGeneral($IdTipoGeneral) {
+        $conn = (new C_MySQL())->open();
+        $sql = "select SQL_CALC_FOUND_ROWS * from viewSubTipoGeneralxTipoGeneral where idtipogeneral = $IdTipoGeneral ;";
+        $list = C_MySQL::returnListAsoc($conn, $sql);
+        $conn->close();
+        return $list;
+    }
 
     public function delete($subtipo) {
         $conn = (new C_MySQL())->open();

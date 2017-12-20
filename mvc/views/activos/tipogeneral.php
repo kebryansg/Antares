@@ -76,11 +76,12 @@
             <button type="button" class="btn btn-default btn-success btn-outline" data-toggle="modal" data-target="#modal-find" data-ajax="loadSubTipoGeneral" >
                 <i class="glyphicon glyphicon-plus"></i> Agregar
             </button>
-            <button type="button" name="btn_del" class="btn btn-default btn-danger btn-outline">
+            <button type="button" name="btn_del_individual" class="btn btn-default btn-danger btn-outline">
                 <i class="glyphicon glyphicon-trash"></i> Eliminar
             </button>
         </div>
         <table
+            id="tbTipoSubTipo"
             full
             data-toolbar="#toolbar1">
             <thead>

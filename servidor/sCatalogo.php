@@ -32,10 +32,13 @@ $resultado = "";
 
 switch ($accion) {
     case "list":
-        $top = $_POST["limit"];
-        $pag = $_POST["offset"];
+        $top = (isset($_POST["limit"])) ? $_POST["limit"] : 0;
+        $pag = (isset($_POST["offset"])) ? $_POST["offset"] : 0;
         $count = 0;
         switch ($op) {
+            case "SubTipoGeneral:TipoGeneral":
+                $resultado = json_encode(SubTipoGeneralDaoImp::listSubTipoGeneralxTipoGeneral($_POST["IDTipoGeneral"]));
+                break;
             case "subtipogeneral":
                 $resultado = json_encode(array(
                     "rows" => SubTipoGeneralDaoImp::listSubTipoGeneral($top, $pag, $count),
@@ -172,7 +175,7 @@ switch ($accion) {
                 $resultado = $tipo->ID;
                 if ($tipo->ID > 0) {
                     $subtipos = json_decode($_POST["subtipos"]);
-
+                    TipoSubTipoGeneralDaoImp::deleteTipoGeneral(new TipoSubTipoGeneral(), $tipo->ID);
                     foreach ($subtipos as $subtipo) {
                         $tipoSubTipo = new TipoSubTipoGeneral();
                         $tipoSubTipo->IDSubTipoGeneral = $subtipo;

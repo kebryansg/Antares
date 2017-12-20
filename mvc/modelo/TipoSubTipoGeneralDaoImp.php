@@ -38,4 +38,10 @@ class TipoSubTipoGeneralDaoImp {
         $conn->query($sql);
         $conn->close();
     }
+    public function deleteTipoGeneral($tipoSubTipo, $IdTipoGeneral) {
+        $conn = (new C_MySQL())->open();
+        $sql = "Delete from ". $tipoSubTipo->tabla ." where idtipogeneral = ". $IdTipoGeneral;
+        $conn->query($sql);
+        $conn->close();
+    }
 }
