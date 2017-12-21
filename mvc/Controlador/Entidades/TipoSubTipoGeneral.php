@@ -7,9 +7,11 @@ class TipoSubTipoGeneral extends ModelSQL {
     public $ID;
     public $IDTipoGeneral;
     public $IDSubTipoGeneral;
+    public $Estado;
 
     function __construct() {
         $this->ID = 0;
+        $this->Estado = "ACT";
         $this->tabla = "tiposubtipogeneral";
     }
 }

@@ -173,14 +173,24 @@ switch ($accion) {
                 $tipo = $mapper->map($json, new TipoGeneral());
                 TipoGeneralDaoImp::save($tipo);
                 $resultado = $tipo->ID;
+
                 if ($tipo->ID > 0) {
+                    $Asignacion_actual = array_map(function($value) {
+                        return $value["ID"];
+                    }, SubTipoGeneralDaoImp::listSubTipoGeneralxTipoGeneral($tipo->ID));
                     $subtipos = json_decode($_POST["subtipos"]);
-                    TipoSubTipoGeneralDaoImp::deleteTipoGeneral(new TipoSubTipoGeneral(), $tipo->ID);
+
+
+                    $NoEstan = array_diff($Asignacion_actual, $subtipos);
+                    $Nuevos = array_diff($subtipos, $Asignacion_actual);
+
+
+                    //TipoSubTipoGeneralDaoImp::deleteTipoGeneral(new TipoSubTipoGeneral(), $tipo->ID);
                     foreach ($subtipos as $subtipo) {
                         $tipoSubTipo = new TipoSubTipoGeneral();
                         $tipoSubTipo->IDSubTipoGeneral = $subtipo;
                         $tipoSubTipo->IDTipoGeneral = $tipo->ID;
-                        TipoSubTipoGeneralDaoImp::save($tipoSubTipo);
+                        //TipoSubTipoGeneralDaoImp::save($tipoSubTipo);
                     }
                 }
                 break;
