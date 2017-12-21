@@ -21,11 +21,9 @@
                         <i class="glyphicon glyphicon-trash"></i> Eliminar
                     </button>
                 </div>
-
                 <table 
                     full
-                    data-toolbar="#modal-toolbar"
-                    >
+                    data-toolbar="#modal-toolbar">
                     <thead>
                         <tr>
                             <th data-field="state" data-checkbox="true"></th>
@@ -35,7 +33,30 @@
                         </tr>
                     </thead>
                 </table>
+                <br>
+                <div class="pull-right">
+                    <button class="btn btn-outline btn-primary" data-dismiss="modal">
+                        <i class="fa fa-save"></i> Guardar
+                    </button>
+                </div>
                 <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-new" class="modal fade"   >
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    Nuevo Registro
+                </h4>
+            </div>
+            <div class="modal-body">
+
             </div>
         </div>
     </div>
@@ -67,21 +88,3 @@
         </div>
     </div>
 </div>
-
-<div id="modal-new" class="modal fade"   >
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">
-                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                    Nuevo Registro
-                </h4>
-            </div>
-            <div class="modal-body">
-
-            </div>
-        </div>
-    </div>
-</div>
-

@@ -1,26 +1,24 @@
 table = $("#Listado table");
-//selections = [];
+
 $(function () {
     initialComponents();
     //$("button[name='btn_add']").click();
-
-    /*$("form").submit(function (e) {
-        e.preventDefault();
-        datos = {
-            url: $(this).attr("action"),
-            dt: {
-                accion: "save",
-                op: $(this).attr("role"),
-                datos: $(this).serializeObject(),
-                subtipos: getSubTipos()
-            }
-        };
-
-        save_global(datos);
-        $(table).bootstrapTable("refresh");
-        $(this).trigger("reset");
-    });*/
+    
 });
+
+function getDatos() {
+    form = "form[save]";
+    datos = {
+        url: $(form).attr("action"),
+        dt: {
+            accion: "save",
+            op: $(form).attr("role"),
+            datos: $(form).serializeObject(),
+            subtipos: getSubTipos()
+        }
+    };
+    return datos;
+}
 
 function getSubTipos() {
     data = $("#tbTipoSubTipo").bootstrapTable("getData").map(row => row.ID);
@@ -44,7 +42,4 @@ function edit(datos) {
 
 
 }
-function deleteIndividual() {
-    ids = $("#tbTipoSubTipo").bootstrapTable("getSelections").map(row => row.ID);
-    $("#tbTipoSubTipo").bootstrapTable("remove", {field: 'ID', values: ids});
-}
+

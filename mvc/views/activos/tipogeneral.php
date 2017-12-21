@@ -32,7 +32,7 @@
     </div>
 </div>
 <div id="div-registro" class="row hidden" >
-    <form role="tipogeneral" action="servidor/sCatalogo.php">
+    <form save role="tipogeneral" action="servidor/sCatalogo.php">
         <div class="col-md-6">
             <div class="form-group">
                 <label for="" class="control-label">Descripción</label>

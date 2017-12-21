@@ -36,7 +36,7 @@
 </div>
 
 <div id="div-registro" class="row hidden">
-    <form role="usuario" action="servidor/sAdministracion.php">
+    <form save role="usuario" action="servidor/sAdministracion.php">
         <div class="col-md-6">
             <div class="form-group">
                 <label class="control-label">Cèdula Identidad</label>
@@ -87,7 +87,6 @@
 
         </div>
         <div class="col-md-6">
-
             <div class="form-group">
                 <label class="control-label">Rol</label>
                 <div class="input-group">

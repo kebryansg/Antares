@@ -45,60 +45,6 @@ function initialComponents() {
     $("table[full]").bootstrapTable(TableDefault);
 
     $(".selectpicker").selectpicker();
-
-
-
-
-    $('#tbFind').on('dbl-click-row.bs.table', function (e, row, $element) {
-        action_seleccion_v2(row);
-    });
-
-    $('#modal-find').on({
-        'show.bs.modal': function (e) {
-
-            //console.log($(e.relatedTarget).closest(".input-group"));
-            dataAjax = $(e.relatedTarget).attr("data-ajax");
-            //$(this).data("ref", $(e.relatedTarget).closest(".input-group"));
-            $(this).data("ref", $(e.relatedTarget));
-            $("table[search]").bootstrapTable($.extend({}, TablePaginationDefault,
-                    {
-                        ajax: dataAjax
-                    }));
-        },
-        'hidden.bs.modal': function (e) {
-            $("table[search]").bootstrapTable("destroy");
-        }
-    });
-    $('#modal-new').on({
-        'show.bs.modal': function (e) {
-            //console.log($(e.relatedTarget).closest(".input-group"));
-            dataUrl = $(e.relatedTarget).attr("data-url");
-            initModalNew('#modal-new', dataUrl);
-        }
-        /*,'hidden.bs.modal': function (e) {
-         $("table[search]").bootstrapTable("destroy");
-         }*/
-    });
-
-
-    $(document).on({
-        'show.bs.modal': function () {
-            var zIndex = 1040 + (10 * $('.modal:visible').length);
-            $(this).css('z-index', zIndex);
-            setTimeout(function () {
-                $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
-            }, 0);
-        },
-        'hidden.bs.modal': function () {
-            if ($('.modal:visible').length > 0) {
-                // restore the modal-open class to the body element, so that scrolling works
-                // properly after de-stacking a modal.
-                setTimeout(function () {
-                    $(document.body).addClass('modal-open');
-                }, 0);
-            }
-        }
-    }, '.modal');
 }
 
 function initModalNew(modal, dataUrl) {
@@ -273,24 +219,25 @@ window.event_accion_default = {
 };
 
 $(function () {
-    
-    $("#modal-adminTipo").modal();
-    $("#page-wrapper").on("click", "button[name='btn_add']", function (e) {
+
+    //$("#modal-adminTipo").modal();
+
+    $(document).on("click", "button[name='btn_add']", function (e) {
         showRegistro();
     });
-    $("#page-wrapper").on("click", "button[name='btn_del']", function (e) {
+    $(document).on("click", "button[name='btn_del']", function (e) {
         if (selections.length > 0) {
             alertEliminarRegistros();
         }
-
     });
     $(document).on("click", "button[name='btn_del_individual']", function (e) {
-        deleteIndividual();
+        div_id = $(this).closest("div").attr("id");
+        tableSelect = $("table[data-toolbar='#" + div_id + "']");
+        deleteIndividual(tableSelect);
     });
 
 
     $(document).on("click", "button[type='reset']", function (e) {
-        //console.log($(this).closest(".modal-body"));
         if ($(this).closest(".modal-body").length > 0) {
             $(this).closest(".modal").modal("hide");
         } else {
@@ -299,15 +246,15 @@ $(function () {
     });
     $(document).on("submit", "form[save]", function (e) {
         e.preventDefault();
-        datos = {
-            url: $(this).attr("action"),
-            dt: {
-                accion: "save",
-                op: $(this).attr("role"),
-                datos: $(this).serializeObject()
-            }
-        };
-        //console.log(e);
+        /*datos = {
+         url: $(this).attr("action"),
+         dt: {
+         accion: "save",
+         op: $(this).attr("role"),
+         datos: $(this).serializeObject()
+         }
+         };*/
+        datos = getDatos();
         save_global(datos);
         if ($(this).closest(".modal-body").length > 0) {
             $(this).closest(".modal").modal("hide");
@@ -317,6 +264,74 @@ $(function () {
             hideRegistro();
         }
     });
+    $('#modal-find').on({
+        'show.bs.modal': function (e) {
+            dataAjax = $(e.relatedTarget).attr("data-ajax");
+            $(this).data("ref", $(e.relatedTarget));
+            $("table[search]").bootstrapTable($.extend({}, TablePaginationDefault,
+                    {
+                        ajax: dataAjax
+                    }));
+
+        }
+        , 'hidden.bs.modal': function (e) {
+            $("table[search]").bootstrapTable("destroy");
+        }
+        , 'dbl-click-row.bs.table': function (e, row, $element) {
+            action_seleccion_v2(row);
+        }
+    });
+    $('#modal-adminTipo').on({
+        'show.bs.modal': function (e) {
+            dataID = $(e.relatedTarget).attr("data-id");
+            $(this).data("ref", $(e.relatedTarget));
+
+            data = getJson({
+                url: "servidor/sCatalogo.php",
+                data: {
+                    accion: "list",
+                    op: "SubTipoGeneral:TipoGeneral",
+                    IDTipoGeneral: dataID
+                }
+            });
+            console.log(data);
+            $(".modal table").bootstrapTable("load", data);
+
+        }
+        , 'hidden.bs.modal': function (e) {
+            $("table[full]").bootstrapTable("removeAll");
+        }
+    });
+
+    $('#modal-new').on({
+        'show.bs.modal': function (e) {
+            //console.log($(e.relatedTarget).closest(".input-group"));
+            dataUrl = $(e.relatedTarget).attr("data-url");
+            initModalNew('#modal-new', dataUrl);
+        }
+    });
+
+    $(document).on({
+        'shown.bs.modal': function (e) {
+            $("table[search],table[full]").bootstrapTable("resetView");
+        }
+        , 'show.bs.modal': function () {
+            var zIndex = 1040 + (10 * $('.modal:visible').length);
+            $(this).css('z-index', zIndex);
+            setTimeout(function () {
+                $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
+            }, 0);
+        },
+        'hidden.bs.modal': function () {
+            if ($('.modal:visible').length > 0) {
+                // restore the modal-open class to the body element, so that scrolling works
+                // properly after de-stacking a modal.
+                setTimeout(function () {
+                    $(document.body).addClass('modal-open');
+                }, 0);
+            }
+        }
+    }, '.modal');
 
 
 
@@ -398,4 +413,9 @@ function hideRegistro() {
     $("#Listado").fadeIn("slow");
     $("#Listado").removeClass("hidden");
     $("#div-registro form").removeData("id");
+}
+
+function deleteIndividual(tableSelect) {
+    ids = $(tableSelect).bootstrapTable("getSelections").map(row => row.ID);
+    $(tableSelect).bootstrapTable("remove", {field: 'ID', values: ids});
 }

@@ -17,6 +17,7 @@
         
     </body>
     <script type="text/javascript">
-        $("#page-wrapper").load("mvc/views/activos/tipogeneral.php");
+        $("#page-wrapper").load("mvc/views/items/proveedor.php");
+        //$("#page-wrapper").load("mvc/views/activos/tipogeneral.php");
     </script>
 </html>
