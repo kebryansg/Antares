@@ -1,11 +1,10 @@
-url= "servidor/sCompras.php"
-op = "proveedor";
+op = "TipoIdentificacion";
 table = $("#Listado table");
+
 $(function(){
     initialComponents();
-    showRegistro();
+//    $("button[name='btn_add']").click();
 });
-
 function getDatos(){
     form = "form[save]";
     datos = {
@@ -25,7 +24,6 @@ function edit(datos){
         $("#div-registro form [name='"+ clave +"']").val(datos[clave]);
     }
 }
-
 function delet(datos){
     $.ajax({
         url: url,

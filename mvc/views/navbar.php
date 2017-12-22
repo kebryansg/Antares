@@ -111,7 +111,16 @@ $RolNombre = "Administrador";
             <li id="item_admin" class="">
                 <a href="#"><i class="fa fa-user fa-fw"></i> Catalogos<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
-                    <li id="item_admin_m1" class="">
+                    <li class="">
+                        <a href="mvc/views/activos/contribuyente.php"><i class="fa fa-check fa-fw"></i> Contribuyente</a>
+                    </li>
+                    <li class="">
+                        <a href="mvc/views/activos/tipoidentificacion.php"><i class="fa fa-check fa-fw"></i> Tipo Identificación</a>
+                    </li>
+                    <li class="">
+                        <a href="mvc/views/activos/tipoemisor.php"><i class="fa fa-check fa-fw"></i> Tipo Emisor</a>
+                    </li>
+                    <li class="">
                         <a href="mvc/views/activos/categoria.php"><i class="fa fa-check fa-fw"></i> Categoría</a>
                     </li>
                     <li id="item_admin_m1" class="">

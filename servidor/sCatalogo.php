@@ -18,9 +18,10 @@ include_once '../mvc/modelo/TipoDaoImp.php';
 include_once '../mvc/modelo/SubTipoDaoImp.php';
 include_once '../mvc/modelo/BodegaDaoImp.php';
 include_once '../mvc/modelo/UbicacionDaoImp.php';
-include_once '../mvc/modelo/TipoGeneralDaoImp.php';
-include_once '../mvc/modelo/SubTipoGeneralDaoImp.php';
-include_once '../mvc/modelo/TipoSubTipoGeneralDaoImp.php';
+include_once '../mvc/modelo/TipoIdentificacionDaoImp.php';
+include_once '../mvc/modelo/TipoEmisorDaoImp.php';
+include_once '../mvc/modelo/ContribuyenteDaoImp.php';
+//include_once '../mvc/modelo/TipoSubTipoGeneralDaoImp.php';
 
 
 
@@ -36,18 +37,21 @@ switch ($accion) {
         $pag = (isset($_POST["offset"])) ? $_POST["offset"] : 0;
         $count = 0;
         switch ($op) {
-            case "SubTipoGeneral:TipoGeneral":
-                $resultado = json_encode(SubTipoGeneralDaoImp::listSubTipoGeneralxTipoGeneral($_POST["IDTipoGeneral"]));
-                break;
-            case "subtipogeneral":
+            case "Contribuyente":
                 $resultado = json_encode(array(
-                    "rows" => SubTipoGeneralDaoImp::listSubTipoGeneral($top, $pag, $count),
+                    "rows" => ContribuyenteDaoImp::listContribuyente($top, $pag, $count),
                     "total" => $count
                 ));
                 break;
-            case "tipogeneral":
+            case "TipoEmisor":
                 $resultado = json_encode(array(
-                    "rows" => TipoGeneralDaoImp::listTipoGeneral($top, $pag, $count),
+                    "rows" => TipoEmisorDaoImp::listTipoEmisor($top, $pag, $count),
+                    "total" => $count
+                ));
+                break;
+            case "TipoIdentificacion":
+                $resultado = json_encode(array(
+                    "rows" => TipoIdentificacionDaoImp::listTipoIdentificacion($top, $pag, $count),
                     "total" => $count
                 ));
                 break;
@@ -164,35 +168,20 @@ switch ($accion) {
     case "save":
         $json = json_decode($_POST["datos"]);
         switch ($op) {
-            case "subtipogeneral":
-                $subtipo = $mapper->map($json, new SubTipoGeneral());
-                SubTipoGeneralDaoImp::save($subtipo);
-                $resultado = $subtipo->ID;
+            case "Contribuyente": 
+                $contribuyente = $mapper->map($json, new Contribuyente());
+                ContribuyenteDaoImp::save($contribuyente);
+                $resultado = $contribuyente->ID;
                 break;
-            case "tipogeneral":
-                $tipo = $mapper->map($json, new TipoGeneral());
-                TipoGeneralDaoImp::save($tipo);
+            case "TipoIdentificacion":
+                $tipo = $mapper->map($json, new TipoIdentificacion());
+                TipoIdentificacionDaoImp::save($tipo);
                 $resultado = $tipo->ID;
-
-                if ($tipo->ID > 0) {
-                    $Asignacion_actual = array_map(function($value) {
-                        return $value["ID"];
-                    }, SubTipoGeneralDaoImp::listSubTipoGeneralxTipoGeneral($tipo->ID));
-                    $subtipos = json_decode($_POST["subtipos"]);
-
-
-                    $NoEstan = array_diff($Asignacion_actual, $subtipos);
-                    $Nuevos = array_diff($subtipos, $Asignacion_actual);
-
-
-                    //TipoSubTipoGeneralDaoImp::deleteTipoGeneral(new TipoSubTipoGeneral(), $tipo->ID);
-                    foreach ($subtipos as $subtipo) {
-                        $tipoSubTipo = new TipoSubTipoGeneral();
-                        $tipoSubTipo->IDSubTipoGeneral = $subtipo;
-                        $tipoSubTipo->IDTipoGeneral = $tipo->ID;
-                        //TipoSubTipoGeneralDaoImp::save($tipoSubTipo);
-                    }
-                }
+                break;
+            case "TipoEmisor":
+                $tipo = $mapper->map($json, new TipoEmisor());
+                TipoEmisorDaoImp::save($tipo);
+                $resultado = $tipo->ID;
                 break;
             case "bodega":
                 $bodega = $mapper->map($json, new Bodega());
@@ -304,6 +293,21 @@ switch ($accion) {
             $key = "ids";
         }
         switch ($op) {
+            case "Contribuyente": 
+                $Contribuyente = new Contribuyente();
+                $Contribuyente->ID = $_POST[$key];
+                ContribuyenteDaoImp::delete($Contribuyente);
+                break;
+            case "TipoEmisor":
+                $tipo = new TipoEmisor();
+                $tipo->ID = $_POST[$key];
+                TipoEmisorDaoImp::delete($tipo);
+                break;
+            case "TipoIdentificacion":
+                $tipo = new TipoIdentificacion();
+                $tipo->ID = $_POST[$key];
+                TipoIdentificacionDaoImp::delete($tipo);
+                break;
             case "tipo":
                 $tipo = new Tipo();
                 $tipo->ID = $_POST[$key];

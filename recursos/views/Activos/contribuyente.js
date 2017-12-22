@@ -1,11 +1,10 @@
-url= "servidor/sCompras.php"
-op = "proveedor";
+op = "Contribuyente";
 table = $("#Listado table");
+
 $(function(){
     initialComponents();
-    showRegistro();
+//    $("button[name='btn_add']").click();
 });
-
 function getDatos(){
     form = "form[save]";
     datos = {

@@ -44,7 +44,14 @@ function initialComponents() {
     $("table[init]").bootstrapTable(TablePaginationDefault);
     $("table[full]").bootstrapTable(TableDefault);
 
-    $(".selectpicker").selectpicker();
+    $(".selectpicker").selectpicker({
+        //title: "Seleccione",
+        size: 5,
+        //showTick: true
+    });
+    
+    $("div[tipo] button[refresh]").click();
+    
 }
 
 function initModalNew(modal, dataUrl) {
@@ -218,14 +225,34 @@ window.event_accion_default = {
     }
 };
 
+function loadCbo(data, select) {
+    $(select).html("");
+    $.each(data.rows, function (i, row) {
+        option = document.createElement("option");
+        $(option).attr("value", row.ID);
+        $(option).html(row.descripcion);
+        $(select).append(option);
+    });
+    $(select).selectpicker("refresh");
+}
+
 $(function () {
 
     //$("#modal-adminTipo").modal();
+    $(document).on("click", "div[tipo] button[refresh]", function (e) {
+        div = $(this).closest("div[tipo]");
+        fnc = $(div).attr("data-fn");
+        select = $(div).find("select");
+        datos = self[fnc]();
+        loadCbo(datos, select);
+    });
+
 
     $(document).on("click", "button[name='btn_add']", function (e) {
         showRegistro();
     });
     $(document).on("click", "button[name='btn_del']", function (e) {
+        console.log(selections);
         if (selections.length > 0) {
             alertEliminarRegistros();
         }
@@ -246,6 +273,21 @@ $(function () {
     });
     $(document).on("submit", "form[save]", function (e) {
         e.preventDefault();
+        datos = {};
+        if (typeof getDatos !== 'undefined' && jQuery.isFunction(getDatos)) {
+            //Es seguro ejectura la función
+            datos = getDatos();
+        } else {
+            datos = {
+                url: $(this).attr("action"),
+                dt: {
+                    accion: "save",
+                    op: $(this).attr("role"),
+                    datos: $(this).serializeObject()
+                }
+            };
+        }
+
         /*datos = {
          url: $(this).attr("action"),
          dt: {
@@ -254,7 +296,7 @@ $(function () {
          datos: $(this).serializeObject()
          }
          };*/
-        datos = getDatos();
+        //datos = getDatos();
         save_global(datos);
         if ($(this).closest(".modal-body").length > 0) {
             $(this).closest(".modal").modal("hide");
@@ -336,7 +378,7 @@ $(function () {
 
 
     $(window).on('check.bs.table uncheck.bs.table check-all.bs.table uncheck-all.bs.table', function (e, rows) {
-        if ($(e.target).attr("init")) {
+        if ($(e.target).attr("init") !== undefined) {
             var ids = $.map(!$.isArray(rows) ? [rows] : rows, row => row.ID);
             if ($.inArray(e.type, ['check', 'check-all']) > -1) {
                 //Add

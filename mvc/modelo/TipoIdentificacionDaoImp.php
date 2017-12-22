@@ -1,8 +1,8 @@
 <?php
 
 include_once '../mvc/Controlador/C_MySQL.php';
-include_once '../mvc/Controlador/Entidades/TipoGeneral.php';
-class TipoGeneralDaoImp {
+include_once '../mvc/Controlador/Entidades/TipoIdentificacion.php';
+class TipoIdentificacionDaoImp {
     public static function save($tipo) {
         $conn = (new C_MySQL())->open();
         $sql = "";
@@ -19,11 +19,11 @@ class TipoGeneralDaoImp {
         $conn->close();
     }
 
-    public static function listTipoGeneral($top, $pag, &$count) {
+    public static function listTipoIdentificacion($top, $pag, &$count) {
         $conn = (new C_MySQL())->open();
         $banderapag = ($top > 0 ) ? "limit $top offset $pag" : "";
         //where estado = 'ACT'
-        $sql = "select SQL_CALC_FOUND_ROWS id as ID , descripcion, observacion, estado from TipoGeneral $banderapag ;";
+        $sql = "select SQL_CALC_FOUND_ROWS id as ID , descripcion, estado from TipoIdentificacion $banderapag ;";
 
         $list = C_MySQL::returnListAsoc($conn, $sql);
         $count = C_MySQL::row_count($conn);

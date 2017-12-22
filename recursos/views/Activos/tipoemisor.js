@@ -1,11 +1,10 @@
-url= "servidor/sCompras.php"
-op = "proveedor";
+op = "TipoEmisor";
 table = $("#Listado table");
+
 $(function(){
     initialComponents();
-    showRegistro();
+//    $("button[name='btn_add']").click();
 });
-
 function getDatos(){
     form = "form[save]";
     datos = {
@@ -20,6 +19,7 @@ function getDatos(){
 }
 
 function edit(datos){
+    console.log(datos);
     $("#div-registro form").data("id", datos.ID);
     for(var clave in datos){
         $("#div-registro form [name='"+ clave +"']").val(datos[clave]);

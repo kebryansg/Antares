@@ -1,4 +1,81 @@
 url = "servidor/sCatalogo.php";
+
+function loadProveedor(params = null) {
+    url = "servidor/sCompras.php";
+    data = {
+        op: "proveedor",
+        accion: "list"
+    };
+    if (params !== null) {
+        json_data = {
+            data: $.extend({}, data, params.data),
+            url: url
+        };
+        params.success(getJson(json_data));
+    } else {
+        return getJson({
+            data: data,
+            url: url
+        });
+}
+}
+
+function loadTipoEmisor(params = null) {
+    data = {
+        op: "TipoEmisor",
+        accion: "list"
+    };
+    if (params !== null) {
+        json_data = {
+            data: $.extend({}, data, params.data),
+            url: url
+        };
+        params.success(getJson(json_data));
+    } else {
+        return getJson({
+            data: data,
+            url: url
+        });
+}
+}
+function loadTipoIdentificacion(params = null) {
+    data = {
+        op: "TipoIdentificacion",
+        accion: "list"
+    };
+    if (params !== null) {
+        json_data = {
+            data: $.extend({}, data, params.data),
+            url: url
+        };
+        params.success(getJson(json_data));
+    } else {
+        return getJson({
+            data: data,
+            url: url
+        });
+}
+}
+function loadContribuyente(params = null) {
+    data = {
+        op: "Contribuyente",
+        accion: "list"
+    };
+    if (params !== null) {
+        json_data = {
+            data: $.extend({}, data, params.data),
+            url: url
+        };
+        params.success(getJson(json_data));
+    } else {
+        return getJson({
+            data: data,
+            url: url
+        });
+}
+}
+
+
 function loadPais(params) {
     json_data = {
         data: $.extend({}, {
@@ -269,7 +346,7 @@ function loadTipoGeneral(params) {
     params.success(getJson(json_data));
 }
 
-function loadSubTipoGeneral(params){
+function loadSubTipoGeneral(params) {
     json_data = {
         data: $.extend({}, {
             op: "subtipogeneral",
@@ -280,7 +357,7 @@ function loadSubTipoGeneral(params){
     params.success(getJson(json_data));
 }
 
-function loadProveedor(params){
+function loadProveedor(params) {
     json_data = {
         data: $.extend({}, {
             op: "proveedor",
