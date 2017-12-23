@@ -1,12 +1,12 @@
-url= "servidor/sCompras.php"
+url_local = "servidor/sCompras.php"
 op = "proveedor";
 table = $("#Listado table");
-$(function(){
+$(function () {
     initialComponents();
-    showRegistro();
+    //showRegistro();
 });
 
-function getDatos(){
+function getDatos() {
     form = "form[save]";
     datos = {
         url: $(form).attr("action"),
@@ -19,16 +19,23 @@ function getDatos(){
     return datos;
 }
 
-function edit(datos){
+function edit(datos) {
     $("#div-registro form").data("id", datos.ID);
-    for(var clave in datos){
-        $("#div-registro form [name='"+ clave +"']").val(datos[clave]);
+    for (var clave in datos) {
+        switch ($("#div-registro form [name='" + clave + "']").prop("tagName")) {
+            case "SELECT":
+                $("#div-registro form [name='" + clave + "']").selectpicker("val", datos[clave]);
+                break;
+            default:
+                $("#div-registro form [name='" + clave + "']").val(datos[clave]);
+                break;
+        }
     }
 }
 
-function delet(datos){
+function delet(datos) {
     $.ajax({
-        url: url,
+        url: url_local,
         type: "POST",
         async: false,
         data: {

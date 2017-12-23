@@ -23,7 +23,7 @@ class ProveedorDaoImp {
         $conn = (new C_MySQL())->open();
         $banderapag = ($top > 0 ) ? "limit $top offset $pag" : "";
         //where estado = 'ACT'
-        $sql = "select SQL_CALC_FOUND_ROWS id as ID , identificacion,nombre,autorizacionsri,telefono,celular,email,IDTipoIdentificacion,IDContribuyente,IDTipoEmisor, estado from Proveedor $banderapag ;";
+        $sql = "select SQL_CALC_FOUND_ROWS * from Proveedor $banderapag ;";
 
         $list = C_MySQL::returnListAsoc($conn, $sql);
         $count = C_MySQL::row_count($conn);

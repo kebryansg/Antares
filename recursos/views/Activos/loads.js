@@ -1,7 +1,10 @@
 url = "servidor/sCatalogo.php";
 
+function hello(){
+    alert();
+}
+
 function loadProveedor(params = null) {
-    url = "servidor/sCompras.php";
     data = {
         op: "proveedor",
         accion: "list"
@@ -9,13 +12,14 @@ function loadProveedor(params = null) {
     if (params !== null) {
         json_data = {
             data: $.extend({}, data, params.data),
-            url: url
+            url: "servidor/sCompras.php"
         };
+        
         params.success(getJson(json_data));
     } else {
         return getJson({
             data: data,
-            url: url
+            url: "servidor/sCompras.php"
         });
 }
 }
@@ -38,6 +42,7 @@ function loadTipoEmisor(params = null) {
         });
 }
 }
+
 function loadTipoIdentificacion(params = null) {
     data = {
         op: "TipoIdentificacion",
@@ -56,6 +61,7 @@ function loadTipoIdentificacion(params = null) {
         });
 }
 }
+
 function loadContribuyente(params = null) {
     data = {
         op: "Contribuyente",
@@ -74,7 +80,6 @@ function loadContribuyente(params = null) {
         });
 }
 }
-
 
 function loadPais(params) {
     json_data = {
@@ -357,7 +362,7 @@ function loadSubTipoGeneral(params) {
     params.success(getJson(json_data));
 }
 
-function loadProveedor(params) {
+/*function loadProveedor(params) {
     json_data = {
         data: $.extend({}, {
             op: "proveedor",
@@ -366,4 +371,4 @@ function loadProveedor(params) {
         url: "servidor/sPedido.php"
     };
     params.success(getJson(json_data));
-}
+}*/

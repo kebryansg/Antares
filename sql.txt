@@ -1,0 +1,14 @@
+CREATE TABLE `proveedor` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `IDTipoIdentificacion` int(11) NOT NULL,
+  `IDContribuyente` int(11) NOT NULL,
+  `IDTipoEmisor` int(1) NOT NULL,
+  `Identificacion` int(11) NOT NULL,
+  `Nombre` varchar(80) NOT NULL,
+  `Telefono` char(10) DEFAULT NULL,
+  `Celular` char(10) DEFAULT NULL,
+  `AutorizacionSRI` int(20) NOT NULL,
+  `Email` varchar(80) NOT NULL,
+  `Estado` varchar(3) NOT NULL,
+  PRIMARY KEY (`ID`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
