@@ -6,7 +6,7 @@ $(function () {
     //showRegistro();
 });
 
-function getDatos() {
+/*function getDatos() {
     form = "form[save]";
     datos = {
         url: $(form).attr("action"),
@@ -17,7 +17,7 @@ function getDatos() {
         }
     };
     return datos;
-}
+}*/
 
 function edit(datos) {
     $("#div-registro form").data("id", datos.ID);

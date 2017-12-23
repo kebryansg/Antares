@@ -52,7 +52,7 @@ $RolNombre = "Administrador";
                 <a href="#"><i class="fa fa-sitemap fa-fw"></i> Pedidos<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="#">Orden de Pedidos</a>
+                        <a href="mvc/views/Pedido/ordenPedido.php">Orden de Pedidos</a>
                     </li>
                     <li>
                         <a href="#">Aprobación de Pedidos</a>

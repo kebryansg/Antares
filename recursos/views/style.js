@@ -49,9 +49,9 @@ function initialComponents() {
         size: 5,
         //showTick: true
     });
-    
+
     $("div[tipo] button[refresh]").click();
-    
+
 }
 
 function initModalNew(modal, dataUrl) {
@@ -73,6 +73,8 @@ function initModalNew(modal, dataUrl) {
                 if ($(r).attr("id") === "div-registro") {
                     $(r).removeClass("hidden");
                     $(r).removeAttr("id");
+                    $(r).find("form").removeAttr("save");
+                    $(r).find("form").attr("modal-save", "");
                     $(r).find("button[new]").remove();
                     div = $(r);
                 }
@@ -84,7 +86,6 @@ function initModalNew(modal, dataUrl) {
 
     $(modal + ' .selectpicker').selectpicker();
 }
-
 
 function getJson(params) {
     result = {};
@@ -271,11 +272,26 @@ $(function () {
             hideRegistro();
         }
     });
+
+    $(document).on("submit", "form[modal-save]", function (e) {
+        e.preventDefault();
+        datos = {
+            url: $(this).attr("action"),
+            dt: {
+                accion: "save",
+                op: $(this).attr("role"),
+                datos: $(this).serializeObject()
+            }
+        };
+        save_global(datos);
+        $(this).closest(".modal").modal("hide");
+    });
+
+
     $(document).on("submit", "form[save]", function (e) {
         e.preventDefault();
         datos = {};
-        if (typeof getDatos !== 'undefined' && jQuery.isFunction(getDatos)) {
-            //Es seguro ejectura la función
+        if (typeof "getDatos" !== 'undefined' && jQuery.isFunction("getDatos")) {
             datos = getDatos();
         } else {
             datos = {
@@ -287,25 +303,13 @@ $(function () {
                 }
             };
         }
-
-        /*datos = {
-         url: $(this).attr("action"),
-         dt: {
-         accion: "save",
-         op: $(this).attr("role"),
-         datos: $(this).serializeObject()
-         }
-         };*/
-        //datos = getDatos();
         save_global(datos);
-        if ($(this).closest(".modal-body").length > 0) {
-            $(this).closest(".modal").modal("hide");
-        } else {
-            $(table).bootstrapTable("refresh");
-            $(this).trigger("reset");
-            hideRegistro();
-        }
+        $(table).bootstrapTable("refresh");
+        $(this).trigger("reset");
+        hideRegistro();
+
     });
+
     $('#modal-find').on({
         'show.bs.modal': function (e) {
             dataAjax = $(e.relatedTarget).attr("data-ajax");
@@ -419,6 +423,7 @@ $(function () {
         }
     });
 });
+
 function responseHandler(res) {
     $.each(res.rows, function (i, row) {
         row.state = $.inArray(row.ID, selections) !== -1;

@@ -46,6 +46,7 @@
         </table>
     </div>
 </div>
+
 <div id="div-registro" class="row hidden" >
     <div class="col-md-12">
         <form class="panel panel-default" action="servidor/sPedido.php" role="ordenPedido" full>
