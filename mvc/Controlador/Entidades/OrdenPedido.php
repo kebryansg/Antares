@@ -13,6 +13,7 @@ class OrdenPedido extends ModelSQL {
     function __construct() {
         $this->ID = 0;
         $this->Estado = "PEN";
+        $this->Fecha = date("Y-m-d H:i:s");
         $this->IDUsuario = "1"; // Defecto
         $this->tabla = "OrdenPedido";
     }

@@ -4,6 +4,7 @@ include_once '../mvc/Controlador/C_MySQL.php';
 include_once '../mvc/Controlador/Entidades/DetalleOrdenPedido.php';
 
 class DetalleOrdenPedidoDaoImp {
+
     public static function save($detalleOrdenPedido) {
         $conn = (new C_MySQL())->open();
         $sql = "";
@@ -34,8 +35,10 @@ class DetalleOrdenPedidoDaoImp {
 
     public function delete($detalleOrdenPedido) {
         $conn = (new C_MySQL())->open();
-        $sql = $detalleOrdenPedido->Update_Delete();
+        //$sql = $detalleOrdenPedido->Update_Delete();
+        $sql = "Delete from " . $detalleOrdenPedido->tabla . " where id = " . $detalleOrdenPedido->ID;
         $conn->query($sql);
         $conn->close();
     }
+
 }

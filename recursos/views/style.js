@@ -291,7 +291,8 @@ $(function () {
     $(document).on("submit", "form[save]", function (e) {
         e.preventDefault();
         datos = {};
-        if (typeof "getDatos" !== 'undefined' && jQuery.isFunction("getDatos")) {
+        //if (typeof "getDatos" !== 'undefined' && jQuery.isFunction("getDatos")) {
+        if (typeof window.getDatos === 'function') {
             datos = getDatos();
         } else {
             datos = {
@@ -303,6 +304,7 @@ $(function () {
                 }
             };
         }
+        console.log(datos);
         save_global(datos);
         $(table).bootstrapTable("refresh");
         $(this).trigger("reset");

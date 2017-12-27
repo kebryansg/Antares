@@ -12,12 +12,8 @@ $resultado = "";
 
 switch ($accion) {
     case "list":
-        if(isset($_POST["limit"])){
-            $top = $_POST["limit"];
-        }
-        if(isset($_POST["offset"])){
-            $pag = $_POST["offset"];
-        }
+        $top = (isset($_POST["limit"])) ? $_POST["limit"] : 0;
+        $pag = (isset($_POST["offset"])) ? $_POST["offset"] : 0;
         $count = 0;
         switch ($op) {
             case "ordenPedido":
@@ -39,14 +35,39 @@ switch ($accion) {
 
                 OrdenPedidoDaoImp::save($ordenPedido);
                 $resultado = $ordenPedido->ID;
-                
 
-                $items = json_decode($_POST["items"]);
-                foreach ($items as $item) {
+
+
+                $DetalleOrdenActual = array_map(function($value) {
+                    return $value["id"];
+                }, DetalleOrdenPedidoDaoImp::listDetalleOrdenPedido($ordenPedido->ID));
+
+
+                $items = array_map(function($value) {
+                    return $value["id"];
+                }, json_decode($_POST["items"], true));
+
+                $itemsNoEstan = array_diff($DetalleOrdenActual, $items);
+                $itemsNuevos = array_diff($items, $DetalleOrdenActual);
+
+
+                foreach (json_decode($_POST["items"]) as $item) {
                     $detalleOrdenPedido = $mapper->map($item, new DetalleOrdenPedido());
                     $detalleOrdenPedido->IDOrdenPedido = $ordenPedido->ID;
-                    DetalleOrdenPedidoDaoImp::save($detalleOrdenPedido);
+                    if (in_array($detalleOrdenPedido->ID, $itemsNuevos)) {
+                        DetalleOrdenPedidoDaoImp::save($detalleOrdenPedido);
+                    } else if (in_array($detalleOrdenPedido->ID, $itemsNoEstan)) {
+                        DetalleOrdenPedidoDaoImp::delete($detalleOrdenPedido);
+                    }
                 }
+
+
+
+                /* foreach ($items as $item) {
+                  $detalleOrdenPedido = $mapper->map($item, new DetalleOrdenPedido());
+                  $detalleOrdenPedido->IDOrdenPedido = $ordenPedido->ID;
+                  DetalleOrdenPedidoDaoImp::save($detalleOrdenPedido);
+                  } */
                 break;
         }
         break;

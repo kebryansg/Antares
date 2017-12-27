@@ -6,6 +6,13 @@ $(function () {
     initialComponents();
 //    $("#items-registro").modal();
     //$("button[name=btn_add]").click();
+    
+    $("#items-registro").on({
+        'hidden.bs.modal': function (e) {
+            $("table[full]").bootstrapTable("resetView");
+        }
+    });
+    
 
     $("form[addLocal]").submit(function (e) {
         e.preventDefault();
@@ -15,8 +22,18 @@ $(function () {
         $(this).trigger("reset");
 
     });
+    
+    $("#test").click(function(e){
+        fun = "getDatos";
+        if (typeof window.getDatos === 'function' ) {
+            console.log("Si");
+        }else{
+            console.log("No");
+        }
+    });
+    
 
-    $("form[full]").submit(function (e) {
+    /*$("form[full]").submit(function (e) {
         e.preventDefault();
         datos = {
             url: $(this).attr("action"),
@@ -30,12 +47,28 @@ $(function () {
         save_global(datos);
         $("#tbOrdenPedido").bootstrapTable("removeAll");
         $(this).trigger("reset");
-    });
+    });*/
 
 });
 
 
+function getDatos() {
+    form = "form[save]";
+    datos = {
+        url: $(form).attr("action"),
+        dt: {
+            accion: "save",
+            op: $(form).attr("role"),
+            datos: $(form).serializeObject(),
+            items: JSON.stringify($("#tbOrdenPedido").bootstrapTable("getData"))
+        }
+    };
+    return datos;
+}
+
+
 function edit(datos) {
+    $("#div-registro form[save]").data("id", datos.ID);
     $("#div-registro input[name='fecha']").val(datos.fecha);
     $("#div-registro input[name='IDArea']").val(datos.idarea);
     $("#div-registro input[descripcion_find]").val(datos.area);
@@ -50,7 +83,7 @@ function edit(datos) {
         }
     };
     $("#tbOrdenPedido").bootstrapTable("load", getJson(dt));
-    //console.log(getJson(dt));
+    console.log($("#tbOrdenPedido").bootstrapTable("getData"));
 }
 
 function obs(value) {
