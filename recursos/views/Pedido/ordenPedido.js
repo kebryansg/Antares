@@ -6,13 +6,20 @@ $(function () {
     initialComponents();
 //    $("#items-registro").modal();
     //$("button[name=btn_add]").click();
-    
+
     $("#items-registro").on({
         'hidden.bs.modal': function (e) {
             $("table[full]").bootstrapTable("resetView");
         }
     });
-    
+
+    $("button[DeleteIndividual]").click(function (e) {
+        div_id = $(this).closest("div[toolbar]").attr("id");
+        tableSelect = $("table[data-toolbar='#" + div_id + "']");
+        ids = $(tableSelect).bootstrapTable("getSelections").map(row => row.id);
+        $(tableSelect).bootstrapTable("remove", {field: 'id', values: ids});
+    });
+
 
     $("form[addLocal]").submit(function (e) {
         e.preventDefault();
@@ -22,32 +29,32 @@ $(function () {
         $(this).trigger("reset");
 
     });
-    
-    $("#test").click(function(e){
+
+    $("#test").click(function (e) {
         fun = "getDatos";
-        if (typeof window.getDatos === 'function' ) {
+        if (typeof window.getDatos === 'function') {
             console.log("Si");
-        }else{
+        } else {
             console.log("No");
         }
     });
-    
+
 
     /*$("form[full]").submit(function (e) {
-        e.preventDefault();
-        datos = {
-            url: $(this).attr("action"),
-            dt: {
-                accion: "save",
-                op: $(this).attr("role"),
-                datos: $(this).serializeObject(),
-                items: JSON.stringify($("#tbOrdenPedido").bootstrapTable("getData"))
-            }
-        };
-        save_global(datos);
-        $("#tbOrdenPedido").bootstrapTable("removeAll");
-        $(this).trigger("reset");
-    });*/
+     e.preventDefault();
+     datos = {
+     url: $(this).attr("action"),
+     dt: {
+     accion: "save",
+     op: $(this).attr("role"),
+     datos: $(this).serializeObject(),
+     items: JSON.stringify($("#tbOrdenPedido").bootstrapTable("getData"))
+     }
+     };
+     save_global(datos);
+     $("#tbOrdenPedido").bootstrapTable("removeAll");
+     $(this).trigger("reset");
+     });*/
 
 });
 
@@ -72,7 +79,7 @@ function edit(datos) {
     $("#div-registro input[name='fecha']").val(datos.fecha);
     $("#div-registro input[name='IDArea']").val(datos.idarea);
     $("#div-registro input[descripcion_find]").val(datos.area);
-    
+
     //DetalleOrdenPedido
     dt = {
         url: "servidor/sPedido.php",

@@ -259,7 +259,9 @@ $(function () {
         }
     });
     $(document).on("click", "button[name='btn_del_individual']", function (e) {
-        div_id = $(this).closest("div").attr("id");
+        div_id = $(this).closest("div[toolbar]").attr("id");
+        
+        alert(div_id);
         tableSelect = $("table[data-toolbar='#" + div_id + "']");
         deleteIndividual(tableSelect);
     });

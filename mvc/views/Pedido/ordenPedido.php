@@ -48,8 +48,6 @@
 </div>
 
 <div id="div-registro" class="row hidden" >
-    
-    <button class="btn btn-success" id="test">test</button>
     <!--<div class="col-md-12">
         <form class="panel panel-default" action="servidor/sPedido.php" role="ordenPedido" full>
             <div class="panel-heading">
@@ -96,12 +94,12 @@
 
 
         <div class="col-md-12">
-            <div id="toolbar2" class="form-inline">
+            <div toolbar id="toolbar2" class="form-inline">
                 <div class="btn-group">
                     <button type="button" class="btn btn-default btn-success btn-outline" data-toggle="modal" data-target="#items-registro">
                         <i class="glyphicon glyphicon-plus"></i> Agregar
                     </button>
-                    <button type="button" name="btn_del_individual" class="btn btn-default btn-danger btn-outline">
+                    <button type="button" DeleteIndividual class="btn btn-default btn-danger btn-outline">
                         <i class="glyphicon glyphicon-trash"></i> Eliminar
                     </button>
                 </div>
