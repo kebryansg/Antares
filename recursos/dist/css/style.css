@@ -8,3 +8,10 @@ a[name="user"] {
 .bx {
     border: red solid 2px;
 }
+
+
+div[tipo] {
+    display: flex;
+    flex-direction: row;
+    align-items: 
+}

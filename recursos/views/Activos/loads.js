@@ -1,7 +1,22 @@
 url = "servidor/sCatalogo.php";
 
-function hello(){
-    alert();
+function loadArea(params = null) {
+    data = {
+        op: "area",
+        accion: "list"
+    };
+    if (params !== null) {
+        json_data = {
+            data: $.extend({}, data, params.data),
+            url: "servidor/sCatalogo.php"
+        };
+        params.success(getJson(json_data));
+    } else {
+        return getJson({
+            data: data,
+            url: "servidor/sCatalogo.php"
+        });
+}
 }
 
 function loadProveedor(params = null) {
@@ -14,7 +29,7 @@ function loadProveedor(params = null) {
             data: $.extend({}, data, params.data),
             url: "servidor/sCompras.php"
         };
-        
+
         params.success(getJson(json_data));
     } else {
         return getJson({
@@ -92,16 +107,7 @@ function loadPais(params) {
     params.success(getJson(json_data));
 }
 
-function loadArea(params) {
-    json_data = {
-        data: $.extend({}, {
-            op: "area",
-            accion: "list"
-        }, params.data),
-        url: url
-    };
-    params.success(getJson(json_data));
-}
+
 
 function loadDepartamento(params) {
     json_data = {
@@ -363,12 +369,12 @@ function loadSubTipoGeneral(params) {
 }
 
 /*function loadProveedor(params) {
-    json_data = {
-        data: $.extend({}, {
-            op: "proveedor",
-            accion: "list"
-        }, params.data),
-        url: "servidor/sPedido.php"
-    };
-    params.success(getJson(json_data));
-}*/
+ json_data = {
+ data: $.extend({}, {
+ op: "proveedor",
+ accion: "list"
+ }, params.data),
+ url: "servidor/sPedido.php"
+ };
+ params.success(getJson(json_data));
+ }*/

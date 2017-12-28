@@ -49,6 +49,9 @@ switch ($accion) {
 
                 $itemsNoEstan = array_diff($DetalleOrdenActual, $items);
                 $itemsNuevos = array_diff($items, $DetalleOrdenActual);
+                
+                
+                DetalleOrdenPedidoDaoImp::deleteOrdenPedido(new DetalleOrdenPedido(),$itemsNoEstan);
 
 
                 foreach (json_decode($_POST["items"]) as $item) {
@@ -56,9 +59,10 @@ switch ($accion) {
                     $detalleOrdenPedido->IDOrdenPedido = $ordenPedido->ID;
                     if (in_array($detalleOrdenPedido->ID, $itemsNuevos)) {
                         DetalleOrdenPedidoDaoImp::save($detalleOrdenPedido);
-                    } else if (in_array($detalleOrdenPedido->ID, $itemsNoEstan)) {
-                        DetalleOrdenPedidoDaoImp::delete($detalleOrdenPedido);
                     }
+                    /*else if (in_array($detalleOrdenPedido->ID, $itemsNoEstan)) {
+                        DetalleOrdenPedidoDaoImp::delete($detalleOrdenPedido);
+                    }*/
                 }
 
 

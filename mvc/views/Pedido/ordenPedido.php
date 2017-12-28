@@ -94,8 +94,8 @@
 
 
         <div class="col-md-12">
-            <div toolbar id="toolbar2" class="form-inline">
-                <div class="btn-group">
+            <div class="btn-toolbar" role="toolbar" aria-label="...">
+                <div class="btn-group" role="group" aria-label="...">
                     <button type="button" class="btn btn-default btn-success btn-outline" data-toggle="modal" data-target="#items-registro">
                         <i class="glyphicon glyphicon-plus"></i> Agregar
                     </button>
@@ -103,20 +103,42 @@
                         <i class="glyphicon glyphicon-trash"></i> Eliminar
                     </button>
                 </div>
-                <div class="input-group">
-                    <input id_find name="IDArea" type="text" class="hidden" required>
-                    <input descripcion_find type="text" class="form-control" aria-describedby="basic-addon1" readonly>
-                    <span class = "input-group-btn">
-                        <button class = "btn btn-default" type="button" data-toggle="modal" data-target="#modal-find" data-ajax="loadArea">
-                            <i class="fa fa-search"></i> 
-                        </button>
-                        <button new class="btn btn-default" type="button" data-toggle="modal" data-target="#modal-new" data-url="mvc/views/activos/area.php">
-                            <i class="fa fa-plus"></i> 
-                        </button>
-                    </span>
-                </div>
+                <div class="btn-group" role="group" aria-label="...">
+                    <div tipo data-fn="loadArea" >
 
+                        <select name="IDTipoIdentificacion" class="selectpicker form-control" data-width="80%" required>
+                        </select>
+                        <button refresh type="button" class="btn btn-success btn-sm btn-outline">
+                            <i class="fa fa-refresh"></i>
+                        </button>    
+                    </div>
+                </div>
             </div>
+            <!--<ul id="toolbar2"  class="list-inline">
+                <li>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-success btn-outline" data-toggle="modal" data-target="#items-registro">
+                            <i class="glyphicon glyphicon-plus"></i> Agregar
+                        </button>
+                        <button type="button" DeleteIndividual class="btn btn-default btn-danger btn-outline">
+                            <i class="glyphicon glyphicon-trash"></i> Eliminar
+                        </button>
+                    </div>
+                </li>
+                <li>
+                    <div tipo data-fn="loadArea" class="bx"  >
+                        <select name="IDTipoIdentificacion" class="selectpicker form-control" required>
+                        </select>
+                        <button refresh type="button" class="btn btn-success btn-sm btn-outline">
+                            <i class="fa fa-refresh"></i>
+                        </button>
+                    </div>
+                </li>
+            </ul>-->
+
+
+
+
             <table
                 id="tbOrdenPedido"
                 data-toolbar="#toolbar2"

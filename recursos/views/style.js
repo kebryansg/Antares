@@ -461,6 +461,9 @@ function showRegistro() {
 function hideRegistro() {
     $("#div-registro").fadeOut();
     $("#div-registro").addClass("hidden");
+    if($("#div-registro table").length > 0){
+        $("#div-registro table").bootstrapTable("removeAll");
+    }
     $("#Listado").fadeIn("slow");
     $("#Listado").removeClass("hidden");
     $("#div-registro form").removeData("id");
