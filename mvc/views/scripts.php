@@ -5,6 +5,10 @@
 
 
 <script src="recursos/views/style.js"></script>
+<script src="recursos/dist/js/moment.js"></script>
+<script src="recursos/dist/js/moment-with-locales.js"></script>
+
+
 
 <script src="recursos/views/Activos/loads.js"></script>
 

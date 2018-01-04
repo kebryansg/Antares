@@ -50,7 +50,6 @@
                     <select name="IDTipoIdentificacion" class="selectpicker form-control" data-width='80%' required>
                     </select>
                 </div>
-
             </div>
             <div class="form-group">
                 <label class="control-label">Identificación</label>

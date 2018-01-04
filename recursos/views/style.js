@@ -1,3 +1,5 @@
+var nav4 = window.Event ? true : false;
+
 var selections = [];
 var TablePaginationDefault = {
     height: 400,
@@ -260,7 +262,7 @@ $(function () {
     });
     $(document).on("click", "button[name='btn_del_individual']", function (e) {
         div_id = $(this).closest("div[toolbar]").attr("id");
-        
+
         alert(div_id);
         tableSelect = $("table[data-toolbar='#" + div_id + "']");
         deleteIndividual(tableSelect);
@@ -426,7 +428,40 @@ $(function () {
             dropdownMenu = null;
         }
     });
+
+    $(document).on("keypress", "input[decimal]", function (e) {
+        //var RE = /^[0-9]+([.][0-9]+)?$/;
+        console.log(e.key);
+        console.log(e.keyCode);
+        key = e.keyCode;
+        var RE = /^[0-9]+([.][0-9]+)?$/;
+        if (key <= 13) {
+            if (RE.test(e.key)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+
+
+        /*var key = e.keyCode;
+         if (key <= 13 || (key >= 48 && key <= 57) || key === 46) {
+         alert();
+         var RE = /^[0-9]+([.][0-9]+)?$/;
+         if (RE.test(e.key)) {
+         return true;
+         } else {
+         return false;
+         }
+         }*/
+
+    });
+
 });
+
+
+
 
 function responseHandler(res) {
     $.each(res.rows, function (i, row) {
@@ -461,7 +496,7 @@ function showRegistro() {
 function hideRegistro() {
     $("#div-registro").fadeOut();
     $("#div-registro").addClass("hidden");
-    if($("#div-registro table").length > 0){
+    if ($("#div-registro table").length > 0) {
         $("#div-registro table").bootstrapTable("removeAll");
     }
     $("#Listado").fadeIn("slow");

@@ -5,7 +5,11 @@ selections = [];
 $(function () {
     initialComponents();
 //    $("#items-registro").modal();
-    //$("button[name=btn_add]").click();
+    $("button[name=btn_add]").click();
+    
+    moment.locale("es");
+    
+    $("#fecha").val(moment().format('MMMM D, YYYY'));
 
     $("#items-registro").on({
         'hidden.bs.modal': function (e) {
