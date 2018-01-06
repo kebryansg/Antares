@@ -5,6 +5,9 @@
 
 
 <script src="recursos/views/style.js"></script>
+
+<script src="recursos/bootstrap/js/jquery.inputmask.bundle.min.js"></script>
+
 <script src="recursos/dist/js/moment.js"></script>
 <script src="recursos/dist/js/moment-with-locales.js"></script>
 

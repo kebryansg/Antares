@@ -1,5 +1,4 @@
 var nav4 = window.Event ? true : false;
-
 var selections = [];
 var TablePaginationDefault = {
     height: 400,
@@ -30,10 +29,8 @@ function action_seleccion_v2(datos) {
     } else if ($(div).closest(".btn-group").length > 0) {
         id = $(div).closest(".btn-group").attr("id");
         table_ref = 'table[data-toolbar="#' + id + '"]';
-
         // Validar que no se repitan los registros
         ids = $(table_ref).bootstrapTable("getData").filter(val => val.ID === datos.ID);
-
         if (ids.length === 0) {
             $(table_ref).bootstrapTable("append", datos);
         }
@@ -45,19 +42,16 @@ function initialComponents() {
     selections = [];
     $("table[init]").bootstrapTable(TablePaginationDefault);
     $("table[full]").bootstrapTable(TableDefault);
-
     $(".selectpicker").selectpicker({
-        //title: "Seleccione",
+//title: "Seleccione",
         size: 5,
         //showTick: true
     });
-
     $("div[tipo] button[refresh]").click();
-
 }
 
 function initModalNew(modal, dataUrl) {
-    //funct_url = $("#modal-new").attr("data-url") + " #div-registro";
+//funct_url = $("#modal-new").attr("data-url") + " #div-registro";
 
     $.ajax({
         url: dataUrl,
@@ -70,7 +64,6 @@ function initModalNew(modal, dataUrl) {
                     $(r).find(".page-header i").remove();
                     title = $(r).find(".page-header").html();
                     $(modal + ' .modal-title').html('<i class="fa fa-plus-circle" aria-hidden="true"></i> Nuevo Registro - ' + title);
-
                 }
                 if ($(r).attr("id") === "div-registro") {
                     $(r).removeClass("hidden");
@@ -85,7 +78,6 @@ function initModalNew(modal, dataUrl) {
             $(modal + ' .modal-body').html(div);
         }
     });
-
     $(modal + ' .selectpicker').selectpicker();
 }
 
@@ -175,10 +167,8 @@ function alertEliminarRegistros() {
 $.fn.serializeObject = function () {
     var o = {};
     var a = this.serializeArray();
-
     /* Agregar identificador  "id" */
     o["id"] = ($.isEmptyObject($(this).data("id"))) ? 0 : $(this).data("id");
-
     $.each(a, function (index, row) {
         o[row.name] = row.value;
     });
@@ -188,7 +178,6 @@ $.fn.serializeObject = function () {
     });
     return JSON.stringify(o);
 };
-
 function btnSeleccion(value) {
     return '<button name="seleccion" class="btn btn-outline btn-success btn-sm"><i class="fa fa-check-square-o" aria-hidden="true"></i> Seleccionar</button>';
 }
@@ -227,7 +216,6 @@ window.event_accion_default = {
         action_seleccion_v2(row);
     }
 };
-
 function loadCbo(data, select) {
     $(select).html("");
     $.each(data.rows, function (i, row) {
@@ -240,8 +228,11 @@ function loadCbo(data, select) {
 }
 
 $(function () {
+    
+    
+    
 
-    //$("#modal-adminTipo").modal();
+//$("#modal-adminTipo").modal();
     $(document).on("click", "div[tipo] button[refresh]", function (e) {
         div = $(this).closest("div[tipo]");
         fnc = $(div).attr("data-fn");
@@ -249,8 +240,6 @@ $(function () {
         datos = self[fnc]();
         loadCbo(datos, select);
     });
-
-
     $(document).on("click", "button[name='btn_add']", function (e) {
         showRegistro();
     });
@@ -262,13 +251,10 @@ $(function () {
     });
     $(document).on("click", "button[name='btn_del_individual']", function (e) {
         div_id = $(this).closest("div[toolbar]").attr("id");
-
         alert(div_id);
         tableSelect = $("table[data-toolbar='#" + div_id + "']");
         deleteIndividual(tableSelect);
     });
-
-
     $(document).on("click", "button[type='reset']", function (e) {
         if ($(this).closest(".modal-body").length > 0) {
             $(this).closest(".modal").modal("hide");
@@ -276,7 +262,6 @@ $(function () {
             hideRegistro();
         }
     });
-
     $(document).on("submit", "form[modal-save]", function (e) {
         e.preventDefault();
         datos = {
@@ -290,8 +275,6 @@ $(function () {
         save_global(datos);
         $(this).closest(".modal").modal("hide");
     });
-
-
     $(document).on("submit", "form[save]", function (e) {
         e.preventDefault();
         datos = {};
@@ -313,9 +296,7 @@ $(function () {
         $(table).bootstrapTable("refresh");
         $(this).trigger("reset");
         hideRegistro();
-
     });
-
     $('#modal-find').on({
         'show.bs.modal': function (e) {
             dataAjax = $(e.relatedTarget).attr("data-ajax");
@@ -324,7 +305,6 @@ $(function () {
                     {
                         ajax: dataAjax
                     }));
-
         }
         , 'hidden.bs.modal': function (e) {
             $("table[search]").bootstrapTable("destroy");
@@ -337,7 +317,6 @@ $(function () {
         'show.bs.modal': function (e) {
             dataID = $(e.relatedTarget).attr("data-id");
             $(this).data("ref", $(e.relatedTarget));
-
             data = getJson({
                 url: "servidor/sCatalogo.php",
                 data: {
@@ -348,21 +327,18 @@ $(function () {
             });
             console.log(data);
             $(".modal table").bootstrapTable("load", data);
-
         }
         , 'hidden.bs.modal': function (e) {
             $("table[full]").bootstrapTable("removeAll");
         }
     });
-
     $('#modal-new').on({
         'show.bs.modal': function (e) {
-            //console.log($(e.relatedTarget).closest(".input-group"));
+//console.log($(e.relatedTarget).closest(".input-group"));
             dataUrl = $(e.relatedTarget).attr("data-url");
             initModalNew('#modal-new', dataUrl);
         }
     });
-
     $(document).on({
         'shown.bs.modal': function (e) {
             $("table[search],table[full]").bootstrapTable("resetView");
@@ -384,20 +360,16 @@ $(function () {
             }
         }
     }, '.modal');
-
-
-
     $(window).on('check.bs.table uncheck.bs.table check-all.bs.table uncheck-all.bs.table', function (e, rows) {
         if ($(e.target).attr("init") !== undefined) {
             var ids = $.map(!$.isArray(rows) ? [rows] : rows, row => row.ID);
             if ($.inArray(e.type, ['check', 'check-all']) > -1) {
-                //Add
+//Add
                 $.each(ids, function (i, id) {
                     selections.push(id);
                 });
-
             } else {
-                //Delete
+//Delete
                 $.each(ids, function (i, id) {
                     if ($.inArray(id, selections) > -1) {
                         selections.splice($.inArray(id, selections), 1);
@@ -406,8 +378,6 @@ $(function () {
             }
         }
     });
-
-
     var dropdownMenu;
     $(window).on('show.bs.dropdown', function (e) {
         if (!$.isEmptyObject($(e.target).attr("name"))) {
@@ -428,41 +398,13 @@ $(function () {
             dropdownMenu = null;
         }
     });
-
-    $(document).on("keypress", "input[decimal]", function (e) {
-        //var RE = /^[0-9]+([.][0-9]+)?$/;
-        console.log(e.key);
-        console.log(e.keyCode);
-        key = e.keyCode;
-        var RE = /^[0-9]+([.][0-9]+)?$/;
-        if (key <= 13) {
-            if (RE.test(e.key)) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-
-
-        /*var key = e.keyCode;
-         if (key <= 13 || (key >= 48 && key <= 57) || key === 46) {
-         alert();
-         var RE = /^[0-9]+([.][0-9]+)?$/;
-         if (RE.test(e.key)) {
-         return true;
-         } else {
-         return false;
-         }
-         }*/
-
-    });
-
+    
+    /*$(document).on("keyup", "input[decimal]", function (e) {
+        
+        this.value = (this.value + '').replace(/^[0-9]+([,][0-9]+)/g, '');
+        
+    });*/
 });
-
-
-
-
 function responseHandler(res) {
     $.each(res.rows, function (i, row) {
         row.state = $.inArray(row.ID, selections) !== -1;
@@ -488,9 +430,11 @@ function deletes() {
 function showRegistro() {
     $("#Listado").fadeOut();
     $("#Listado").addClass("hidden");
-
     $("#div-registro").fadeIn("slow");
     $("#div-registro").removeClass("hidden");
+    
+    $(":input[decimal]").inputmask();
+    
 }
 
 function hideRegistro() {
