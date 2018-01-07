@@ -58,7 +58,6 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <!--<input class="form-control" decimal data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'autoGroup': true, 'digits': 2, 'digitsOptional': false, 'prefix': '$ ', 'placeholder': '0'" style="text-align: right;">-->
                 <div class="form-group">
                     <label for="" class="control-label">Área</label>
                     <div tipo data-fn="loadArea" >
@@ -153,7 +152,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label">Cantidad</label>
-                                    <input name="cantidad" type="text" class="form-control" required>
+                                    <!--<input name="cantidad" type="text" class="form-control" required>-->
+                                    <input required name="cantidad" decimal class="form-control" required data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'autoGroup': true, 'digits': 2, 'digitsOptional': false,  'placeholder': '0'" style="text-align: right;">
                                 </div>
                             </div>
                             <div class="col-md-6">
